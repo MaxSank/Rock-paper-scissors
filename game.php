@@ -169,12 +169,14 @@ if (count($variants) % 2 == 1 and count($variants) >= 3 and count(array_unique($
 }
 
 # Messages about problems
-elseif (count($variants) % 2 == 0) {
-    echo "Please enter an odd number of arguments. For example: 'rock paper scissors'.";
-}
 elseif (count($variants) < 3) {
     echo "Please enter an odd number of arguments equal to or greater than 3. For example 'rock paper scissors'.";
 }
+
+elseif (count($variants) % 2 == 0) {
+    echo "Please enter an odd number of arguments. For example: 'rock paper scissors'.";
+}
+
 elseif (count(array_unique($variants)) != count($variants)) {
     print_r($variants);
     echo "Please avoid duplicate arguments. For example: 'rock paper scissors'.";
