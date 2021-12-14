@@ -178,6 +178,5 @@ elseif (count($variants) % 2 == 0) {
 }
 
 elseif (count(array_unique($variants)) != count($variants)) {
-    print_r($variants);
     echo "Please avoid duplicate arguments. For example: 'rock paper scissors'.";
 }
