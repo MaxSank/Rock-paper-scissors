@@ -1,10 +1,16 @@
 <?php
 
+# "PHP-class, which allows transform php associative arrays to ASCII tables"
+# https://github.com/deniskoronets/php-array-table
+require(__DIR__ . '/vendor/autoload.php');
+use dekor\ArrayToTextTable;
+
+
 class SourceKeyClass
 {
     public function generate_source_key(): string
     {
-        return bin2hex(random_bytes(256));
+        return bin2hex(random_bytes(32));
     }
 }
 
@@ -21,6 +27,10 @@ class HelpClass
     public function show_table(array $arr_of_variants): string
     # "Help" table
     {
+        # Empty array for ascii table
+        $arr_for_render = [];
+
+        # Finding all the opponent's choices for each item from the original array at which you win
         foreach ($arr_of_variants as $value) {
             # Items to the left of the selected item
             $temp1 = array();
@@ -42,12 +52,15 @@ class HelpClass
             # Discarding losing combinations
             $temp = array_slice($temp, count($temp) / 2);
 
-            echo "$value wins if the opponent chooses: ";
-            foreach ($temp as $val) {
-                echo "$val ";
-            }
-            echo "\n";
+            #String from $temp
+            $temp = implode((' '), $temp);
+
+            # Add row to array for ascii table
+            array_push($arr_for_render, ['Possible choices' => $value,'Win if the opponent chooses' => $temp]);
         }
+
+        # Rendering of table
+        echo (new ArrayToTextTable($arr_for_render))->render();
         return "";
     }
 }
@@ -81,6 +94,7 @@ class UserClass
         elseif ($user_input == '?') {
             $help = (new HelpClass)->show_table($arr_of_options);
             echo $help;
+            echo "\n";
             return (new UserClass)->user_actions($arr_of_options);
         }
 
