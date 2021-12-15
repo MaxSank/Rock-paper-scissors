@@ -97,7 +97,7 @@ class ResultClass
 {
     public function determine_the_winner(string $pcs_choice, int $users_choice, array $initial_array): string
     {
-        # String pc_move to index
+        # String with pcs_choice to index
         $pcs_choice = array_search($pcs_choice, $initial_array);
 
         # Draw condition
@@ -107,7 +107,7 @@ class ResultClass
 
         # Win/lose conditions
         elseif ($pcs_choice != $users_choice) {
-            # Remove zero from index
+            # Remove zero from indices
             $pc = $pcs_choice + 1;
             $user = $users_choice + 1;
 
@@ -138,9 +138,10 @@ class ResultClass
 
 # Basic script
 
+# Array of arguments passed to script
 $variants = array_slice($argv, 1);
 
-# Right insert
+# Conditions for valid user input
 if (count($variants) % 2 == 1 and count($variants) >= 3 and count(array_unique($variants)) == count($variants)) {
 
     # Any number of rounds through "while (true)"
@@ -156,10 +157,10 @@ if (count($variants) % 2 == 1 and count($variants) >= 3 and count(array_unique($
         $hmac_pc = (new HmacClass)->generate_hmac($pc, $hmac_key);
         echo "HMAC:\n", $hmac_pc, "\n";
 
-        # Menu and user's turn
+        # Print menu and user's turn
         $user = (new UserClass)->user_actions($variants);
 
-        # PC choose:
+        # Printing what the computer has selected
         echo "Computer move: $pc\n";
 
         # Calculate and print result
